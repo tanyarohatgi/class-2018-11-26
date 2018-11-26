@@ -1,0 +1,33 @@
+---
+title: "maine"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(readxl)
+library(scales)
+```
+
+```{r}
+ #READING IN DATA:
+
+tib1 <- read_rds("tibble_1.rds")
+tib2 <- read_rds("tibble_2.rds")
+ref_plot <- read_rds("base_plot.rds")
+```
+
+```{r}
+tib2 %>% count(ballot_style)
+
+tib2 %>%
+  ggplot(aes(vote_id, cum_votes, color = candidate)) + geom_line(size = 1) +
+  ggtitle("Cumulative Voting in Maine's Second Congressional District") +
+  labs(subtitle = "Representative Poliquin Leads Democratic Challenger Golden in First Round", color = "", caption = "Official Election Results from the Maine Secretary of State") +
+  xlab("") + ylab("Cumulative First Round Votes") +
+  scale_y_continuous(breaks=c(0, 50000, 100000), labels = c("0", "50,000", "100,000")) +
+  theme(axis.text.x = element_blank())
+```
+
